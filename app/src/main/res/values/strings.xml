@@ -12,4 +12,5 @@
     <string name="str_asistencia">Control de asistencia</string>
     <string name="str_help">Help</string>
     <string name="str_fab_search_file">Search File</string>
+    <string name="str_welcome">Welcome</string>
 </resources>
