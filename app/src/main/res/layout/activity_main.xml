@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:menu="@menu/option_menu"
+    android:id="@+id/containerMain"
     tools:context=".MainActivity">
 
     <TextView
@@ -16,18 +16,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/recyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/hostFragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvMain"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/item_file"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/common_padding_min"/>
-
+        app:layout_constraintEnd_toEndOf="parent"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
