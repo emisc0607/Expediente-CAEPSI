@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Expediente CAEPSI</string>
+    <string name="str_hoja_intervencion">Hoja de intervención en crisis</string>
+    <string name="str_nota_psicologica">Nota psicológica y de evolución</string>
+    <string name="str_tratamiento">Plan de tratamiento</string>
+    <string name="str_metas">Mapa de alcance de metas</string>
+    <string name="str_patogenesis">Mapa de patogénesis</string>
+    <string name="str_evaluacion">Proceso de evaluación</string>
+    <string name="str_historia_clinica">Historia Clínica</string>
+    <string name="str_entrevista_inicial">Entrevista inicial</string>
+    <string name="str_ficha_id">Ficha de Indentificación</string>
+    <string name="str_asistencia">Control de asistencia</string>
+    <string name="str_help">Help</string>
+    <string name="str_fab_search_file">Search File</string>
 </resources>
