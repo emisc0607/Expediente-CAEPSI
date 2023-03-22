@@ -17,4 +17,18 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="str_files">Expedientes</string>
     <string name="str_home_fragment">Home fragment</string>
+    <string name="str_apellido_paterno">Apellido paterno</string>
+    <string name="str_apellido_materno">Apellido materno</string>
+    <string name="str_name">Nombre</string>
+    <string name="str_user_data">Datos del usuario</string>
+    <string name="str_sex">Sexo</string>
+    <string name="str_age">Edad</string>
+    <string name="str_ingreso">Fecha de ingreso</string>
+    <string name="str_file_id">Clave del expediente</string>
+    <string name="str_obs">Observación</string>
+    <string name="str_status">Estatus</string>
+    <string name="str_therapist">Terapeuta</string>
+    <string name="str_yes">Si</string>
+    <string name="str_no">No</string>
+    <string name="str_attending">Asistencia</string>
 </resources>
