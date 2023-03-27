@@ -441,7 +441,12 @@
                 android:text="@string/str_descripcion_del_problema" />
 
         </LinearLayout>
-
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/common_padding_min"
+            android:text="@string/str_areas_de_afeccion" />
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -536,7 +541,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/str_tecnicas"
+            android:hint="@string/str_tecnicas_if"
             android:padding="@dimen/common_padding_min">
 
             <com.google.android.material.textfield.TextInputEditText
