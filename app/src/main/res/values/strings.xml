@@ -182,4 +182,8 @@
     <string name="str_password">Password</string>
     <string name="str_sign_in">Sign in</string>
     <string name="str_login">Login</string>
+    <string name="str_max_char">Maximo 400 caracteres</string>
+    <string name="str_bdi">BDI</string>
+    <string name="str_calidad_de_sueño">Calidad de sueño</string>
+    <string name="str_calidad_de_vida">Calidad de vida</string>
 </resources>

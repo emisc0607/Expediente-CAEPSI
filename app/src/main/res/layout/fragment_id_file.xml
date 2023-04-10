@@ -89,19 +89,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/str_reingreso" />
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/str_crisis"/>
             </RadioGroup>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/str_crisis">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
         <!--All-->
         <com.google.android.material.textfield.TextInputLayout

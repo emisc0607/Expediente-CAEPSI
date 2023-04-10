@@ -34,8 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/str_fecha"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tilFile"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tilName">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -51,7 +51,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/str_file_id"
-            app:helperText="@string/str_curp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tilDate"
             app:layout_constraintTop_toTopOf="@id/tilDate">
@@ -63,60 +62,34 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilDiagnose"
+            android:id="@+id/tilCURP"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/str_diagnostico_recibido"
+            android:hint="@string/str_curp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tilFile">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <RadioGroup
-            android:id="@+id/rgV"
-            android:layout_width="0dp"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilDiagnose"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:hint="@string/str_diagnostico_recibido"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tilDiagnose">
+            app:layout_constraintTop_toBottomOf="@id/tilCURP">
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:layout_width="0dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="VA" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="VD" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="VO" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="VR" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="VC" />
-
-        </RadioGroup>
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvCapture"
@@ -128,7 +101,7 @@
             android:text="@string/str_image_capture"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rgV" />
+            app:layout_constraintTop_toBottomOf="@id/tilDiagnose" />
 
         <ImageView
             android:id="@+id/imageCaptured"
