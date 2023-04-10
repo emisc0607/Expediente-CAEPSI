@@ -23,8 +23,8 @@
     <string name="str_user_data">Datos del usuario</string>
     <string name="str_sex">Sexo</string>
     <string name="str_age">Edad</string>
-    <string name="str_ingreso">Fecha de ingreso</string>
-    <string name="str_file_id">Clave del expediente</string>
+    <string name="str_ingreso">Clave de ingreso</string>
+    <string name="str_file_id">Clave de expediente</string>
     <string name="str_obs">Observación</string>
     <string name="str_status">Estatus</string>
     <string name="str_therapist">Terapeuta</string>
@@ -176,4 +176,10 @@
     <string name="str_entrevistador_hc_1">Sentimientos y reacciones del entrevistador hacia el paciente</string>
     <string name="str_entrevistador_hc_2">Información técnica de la aplicación de la entrevista</string>
     <string name="str_entrevistador_hc_3">Observaciones e indicaciones terapéuticas</string>
+    <string name="login">Inicio de sesión</string>
+    <string name="str_login_google">Login with Google</string>
+    <string name="str_email">Email</string>
+    <string name="str_password">Password</string>
+    <string name="str_sign_in">Sign in</string>
+    <string name="str_login">Login</string>
 </resources>
