@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         // Handle item selection
         return when (item.itemId) {
             R.id.bFiles -> {
-                binding.tvMain.text = getString(R.string.str_home_fragment)
+                binding.tvMain.text = getString(R.string.login)
                 mFragmentManager.beginTransaction().hide(mActiveFragment).show(homeFragment)
                     .commit()
                 mActiveFragment = homeFragment
