@@ -365,29 +365,22 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageExamenMental"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="#BCBCBC"
-                    android:contentDescription="@string/str_examen_mental"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintDimensionRatio="H, 4:3"
-                    app:layout_constraintEnd_toEndOf="parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    app:layout_constraintTop_toBottomOf="@id/tvExamenMental"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvExamenMental" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:helperText="@string/str_max_char"
+                    android:hint="@string/str_examen_mental">
 
-                <ImageButton
-                    android:id="@+id/bImageMentalSelected"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:contentDescription="@string/str_examen_mental"
-                    android:src="@drawable/ic_camera"
-                    app:layout_constraintBottom_toBottomOf="@id/imageExamenMental"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/imageExamenMental" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:maxLength="400"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords" />
+                </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -407,39 +400,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageDescripcionProblema"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="#BCBCBC"
-                    android:contentDescription="@string/str_familiograma"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintDimensionRatio="H, 4:3"
-                    app:layout_constraintEnd_toEndOf="parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    app:layout_constraintTop_toBottomOf="@id/tvDescripcionProblema"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDescripcionProblema" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:helperText="@string/str_max_char"
+                    android:hint="@string/str_descripcion_del_problema">
 
-                <ImageButton
-                    android:id="@+id/bDescripcionProblemaSelected"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:contentDescription="@string/str_descripcion_del_problema"
-                    android:src="@drawable/ic_camera"
-                    app:layout_constraintBottom_toBottomOf="@id/imageDescripcionProblema"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/imageDescripcionProblema" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:maxLength="400"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords" />
+                </com.google.android.material.textfield.TextInputLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.MaterialComponents.Body1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="@dimen/common_padding_min"
-                android:text="@string/str_descripcion_del_problema" />
-
         </LinearLayout>
         <com.google.android.material.textview.MaterialTextView
             style="@style/TextAppearance.MaterialComponents.Body1"
@@ -447,48 +424,64 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/common_padding_min"
             android:text="@string/str_areas_de_afeccion" />
-        <RadioGroup
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/common_padding_default">
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/str_escolar" />
+                android:orientation="horizontal">
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_escolar" />
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_familiar" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/str_familiar" />
+                android:orientation="horizontal">
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_laboral" />
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_social" />
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/str_laboral" />
+                android:orientation="horizontal">
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_pareja" />
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/str_social" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/str_pareja" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/str_sexual" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_sexual" />
+            </LinearLayout>
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/str_otra" />
-        </RadioGroup>
-
+        </LinearLayout>
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
