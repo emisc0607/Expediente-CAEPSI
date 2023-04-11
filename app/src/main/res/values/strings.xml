@@ -23,7 +23,7 @@
     <string name="str_user_data">Datos del usuario</string>
     <string name="str_sex">Sexo</string>
     <string name="str_age">Edad</string>
-    <string name="str_ingreso">Clave de ingreso</string>
+    <string name="str_ingreso">Fecha de ingreso</string>
     <string name="str_file_id">Clave de expediente</string>
     <string name="str_obs">Observación</string>
     <string name="str_status">Estatus</string>
