@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "39487028631",
+    "project_id": "caepsi-56038",
+    "storage_bucket": "caepsi-56038.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39487028631:android:4f2a02db8422d24b0f58d2",
+        "android_client_info": {
+          "package_name": "com.emisc0607.expedientecaepsi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "39487028631-ligq8lcrcmu5r0ee5p1ca84ibale42jo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.emisc0607.expedientecaepsi",
+            "certificate_hash": "ed6981d100495d65a31984e4788ef42c354b4d52"
+          }
+        },
+        {
+          "client_id": "39487028631-iag1seck5bbd6852m0ilj3njq7h4mm48.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDr-h953mcwL5IxOn5L6zB8PgfdN96kWQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "39487028631-iag1seck5bbd6852m0ilj3njq7h4mm48.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -558,7 +558,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="@dimen/common_padding_min"
-            android:text="@string/str_consumo_de_sustancias" />
+            android:text="@string/str_consumo_de_sustancias"
+            tools:ignore="TooManyViews" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

@@ -20,14 +20,14 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.etUser.text?.let {
+        /*binding.etUser.text?.let {
             binding.etPassword.text?.let {
                 buttons()
             }
-        }
+        }*/
     }
 
-    private fun buttons() {
+    /*private fun buttons() {
         binding.bLogin.setOnClickListener {
 
             if (binding.etUser.text!!.isNotEmpty() && binding.etPassword.text!!.isNotEmpty()) {
@@ -44,5 +44,5 @@ class HomeFragment : Fragment() {
             }
 
         }
-    }
+    }*/
 }
