@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/bFiles"
+        android:title="@string/str_files"
+        android:icon="@drawable/ic_home"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/bAssistance"
+        android:title="@string/str_asistencia" />
+    <item
+        android:id="@+id/bId"
+        android:title="@string/str_ficha_id" />
+    <item
+        android:id="@+id/bInitialInterview"
+        android:title="@string/str_entrevista_inicial" />
+    <item
+        android:id="@+id/bClinicHistory"
+        android:title="@string/str_historia_clinica" />
+    <item
+        android:id="@+id/bEvaluation"
+        android:title="@string/str_evaluacion" />
+    <item
+        android:id="@+id/bMapPat"
+        android:title="@string/str_patogenesis" />
+    <item
+        android:id="@+id/bMapGoals"
+        android:title="@string/str_metas" />
+    <item
+        android:id="@+id/bTreatment"
+        android:title="@string/str_tratamiento" />
+    <item
+        android:id="@+id/bEvolution"
+        android:title="@string/str_nota_psicologica" />
+    <item
+        android:id="@+id/bIntervention"
+        android:title="@string/str_hoja_intervencion" />
+    <item
+        android:id="@+id/bHelp"
+        android:title="@string/str_help" />
+
+</menu>
