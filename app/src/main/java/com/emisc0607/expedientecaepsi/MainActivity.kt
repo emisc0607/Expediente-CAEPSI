@@ -7,16 +7,21 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.emisc0607.expedientecaepsi.databinding.ActivityMainBinding
+import com.emisc0607.expedientecaepsi.entities.Expediente
+import com.emisc0607.expedientecaepsi.entities.ExpedienteAdapter
 import com.emisc0607.expedientecaepsi.entities.MainAux
 import com.emisc0607.expedientecaepsi.fragmentBuilders.*
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import java.util.*
 
 class MainActivity : AppCompatActivity(), MainAux {
@@ -42,6 +47,10 @@ class MainActivity : AppCompatActivity(), MainAux {
     private val treatmentFragment = TreatmentFragment()
     private val evolutionFragment = EvolutionFragment()
     private val interventionFragment = InterventionFragment()
+    private lateinit var mAdapter: ExpedienteAdapter
+    private var mutableDbList: MutableList<Expediente> = mutableListOf()
+    private lateinit var databaseReference: DatabaseReference
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -49,7 +58,9 @@ class MainActivity : AppCompatActivity(), MainAux {
         setContentView(binding.root)
         setupAuth()
         launchFragment()
-
+        databaseReference = FirebaseDatabase.getInstance().getReference("expedientes")
+        initRecyclerView()
+        fetchExpedientes()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -79,6 +90,7 @@ class MainActivity : AppCompatActivity(), MainAux {
             }
         }
     }
+
     override fun onResume() {
         super.onResume()
         mFirebaseAuth?.addAuthStateListener { mAuthListener }
@@ -101,6 +113,78 @@ class MainActivity : AppCompatActivity(), MainAux {
             }
         }
     }
+
+    private fun initRecyclerView() {
+        mAdapter = ExpedienteAdapter(
+            dbData = mutableDbList,
+            onClickListener = { expediente -> onItemSelected(expediente) },
+            onClickDelete = { position -> onDeletedItem(position) })
+        binding.recyclerView.layoutManager = GridLayoutManager(this, 2)
+        binding.recyclerView.adapter = mAdapter
+        readDataFromDatabase()
+    }
+
+    private fun readDataFromDatabase() {
+        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (expedienteSnapshot in snapshot.children) {
+                    val expediente = expedienteSnapshot.getValue(Expediente::class.java)
+                    expediente?.let { mutableDbList.add(it) }
+                }
+                mAdapter.notifyDataSetChanged()
+                binding.progressBar.visibility = View.GONE
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+    }
+
+    private fun onItemSelected(expediente: Expediente) {
+        Toast.makeText(this, expediente.name, Toast.LENGTH_SHORT).show()
+        val fragment = AssistanceFragment()
+        fragment.arguments = Bundle().apply {
+
+        }
+
+    }
+
+    private fun onDeletedItem(position: Int) {
+        val expediente = mutableDbList[position]
+        databaseReference.child(expediente.id).removeValue()
+            .addOnSuccessListener {
+                mutableDbList.removeAt(position)
+                mAdapter.notifyItemRemoved(position)
+                mAdapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { error ->
+                Toast.makeText(
+                    this,
+                    "Error al eliminar expediente: $error",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
+
+    private fun fetchExpedientes() {
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                mutableDbList.clear()
+                for (dataSnapshot in snapshot.children) {
+                    val expediente = dataSnapshot.getValue(Expediente::class.java)
+                    if (expediente != null) {
+                        mutableDbList.add(expediente)
+                    }
+                }
+                mAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
+    }
+
     private fun launchFragment() {
         mFragmentManager = supportFragmentManager
         mActiveFragment = homeFragment
@@ -267,7 +351,13 @@ class MainActivity : AppCompatActivity(), MainAux {
     * MainAux
     * */
     override fun hideFab(isVisible: Boolean) {
-        if (isVisible) binding.fab.show()
-        else binding.fab.hide()
+        if (isVisible) {
+            binding.fab.show()
+            binding.recyclerView.visibility = View.VISIBLE
+        }
+        else {
+            binding.fab.hide()
+            binding.recyclerView.visibility = View.GONE
+        }
     }
 }
