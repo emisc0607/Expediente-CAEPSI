@@ -17,15 +17,19 @@ import com.emisc0607.expedientecaepsi.R
 import com.emisc0607.expedientecaepsi.databinding.FragmentHomeBinding
 import com.emisc0607.expedientecaepsi.databinding.ItemFileBinding
 import com.emisc0607.expedientecaepsi.entities.Expediente
+import com.emisc0607.expedientecaepsi.entities.ExpedienteAdapter
+import com.emisc0607.expedientecaepsi.entities.ExpedienteProvider
+import com.emisc0607.expedientecaepsi.entities.ExpedienteViewHolder
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
+/*
 class HomeFragment : Fragment() {
+
     private lateinit var mBinding: FragmentHomeBinding
-    private lateinit var mFirebaseAdapter: FirebaseRecyclerAdapter<Expediente, ExpedienteHolder>
-    private lateinit var mLayoutManager: RecyclerView.LayoutManager
+    private lateinit var mAdapter: ExpedienteAdapter
+    private var mutableDbList: MutableList<Expediente> = ExpedienteProvider.dataList.toMutableList()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,91 +40,89 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val query = FirebaseDatabase.getInstance().reference.child("expedientes")
-        val options =
-            FirebaseRecyclerOptions.Builder<Expediente>().setQuery(query, Expediente::class.java)
-                .build()
+        ExpedienteProvider.dataList
+        initRecyclerView()
+    }
 
-        mFirebaseAdapter = object : FirebaseRecyclerAdapter<Expediente, ExpedienteHolder>(options) {
+    private fun initRecyclerView() {
+        mAdapter = ExpedienteAdapter(
+            dbData = mutableDbList,
+            onClickListener = { expediente -> onItemSelected(expediente) },
+            onClickDelete = { position -> onDeletedItem(position) })
+        mBinding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        mBinding.recyclerView.adapter = mAdapter
 
-            private lateinit var mContext: Context
+    }
 
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpedienteHolder {
-                mContext = parent.context
-                val view =
-                    LayoutInflater.from(mContext).inflate(R.layout.item_file, parent, false)
-                return ExpedienteHolder(view)
-            }
+    private fun onItemSelected(expediente: Expediente) {
+        Toast.makeText(requireContext(), expediente.name, Toast.LENGTH_SHORT).show()
+    }
 
-            override fun onBindViewHolder(
-                holder: ExpedienteHolder,
-                position: Int,
-                model: Expediente
-            ) {
-                val expediente = getItem(position)
-                with(holder) {
-                    setListener(expediente)
-                    binding.tvName.text = expediente.id
-                    Glide
-                        .with(mContext)
-                        .load(expediente.imgUrl)
-                        .centerCrop()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(binding.imagePhoto)
+    private fun onDeletedItem(position: Int) {
+        mutableDbList.removeAt(position)
+        mAdapter.notifyItemRemoved(position)
+    }
+}*/
+class HomeFragment : Fragment() {
+
+    private lateinit var mBinding: FragmentHomeBinding
+    private lateinit var mAdapter: ExpedienteAdapter
+    private var mutableDbList: MutableList<Expediente> = mutableListOf()
+    private lateinit var databaseReference: DatabaseReference
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        mBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        return mBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        databaseReference = FirebaseDatabase.getInstance().getReference("expedientes")
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
+        mAdapter = ExpedienteAdapter(
+            dbData = mutableDbList,
+            onClickListener = { expediente -> onItemSelected(expediente) },
+            onClickDelete = { position -> onDeletedItem(position) })
+        mBinding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        mBinding.recyclerView.adapter = mAdapter
+        readDataFromDatabase()
+    }
+
+    private fun readDataFromDatabase() {
+        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (expedienteSnapshot in snapshot.children) {
+                    val expediente = expedienteSnapshot.getValue(Expediente::class.java)
+                    expediente?.let { mutableDbList.add(it) }
                 }
+                mAdapter.notifyDataSetChanged()
             }
 
-            override fun onDataChanged() {
-                super.onDataChanged()
-                mBinding.progressBar.visibility = View.GONE
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("HomeFragment", "Error al leer datos de la base de datos: $error")
             }
-
-            override fun onError(error: DatabaseError) {
-                super.onError(error)
-                Toast.makeText(mContext, error.message, Toast.LENGTH_SHORT).show()
-
-            }
-        }
-        mLayoutManager = GridLayoutManager(context, 2)
-        mBinding.recyclerView.apply {
-            setHasFixedSize(true)
-            layoutManager = mLayoutManager
-            adapter = mFirebaseAdapter
-        }
+        })
     }
 
-    override fun onStart() {
-        super.onStart()
-        mFirebaseAdapter.startListening()
+    private fun onItemSelected(expediente: Expediente) {
+        Toast.makeText(requireContext(), expediente.name, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onStop() {
-        super.onStop()
-        mFirebaseAdapter.stopListening()
-    }
-
-    inner class ExpedienteHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val binding = ItemFileBinding.bind(view)
-        fun setListener(file: Expediente) {
-
-        }
-    }
-    /*private fun buttons() {
-        binding.bLogin.setOnClickListener {
-
-            if (binding.etUser.text!!.isNotEmpty() && binding.etPassword.text!!.isNotEmpty()) {
-                Snackbar.make(binding.root, "Iniciando sesión", Snackbar.LENGTH_SHORT).show()
-            } else {
-                Snackbar.make(binding.root, "Error iniciando sesión", Snackbar.LENGTH_SHORT).show()
+    private fun onDeletedItem(position: Int) {
+        val expediente = mutableDbList[position]
+        databaseReference.child(expediente.id).removeValue()
+            .addOnSuccessListener {
+                mutableDbList.removeAt(position)
+                mAdapter.notifyItemRemoved(position)
             }
-        }
-        binding.googleButton.setOnClickListener {
-            if (binding.etUser.text!!.isNotEmpty() && binding.etPassword.text!!.isNotEmpty()) {
-                Snackbar.make(binding.root, "Iniciando sesión con Google", Snackbar.LENGTH_SHORT).show()
-            } else {
-                Snackbar.make(binding.root, "Error iniciando sesión", Snackbar.LENGTH_SHORT).show()
+            .addOnFailureListener { error ->
+                Log.e("HomeFragment", "Error al eliminar expediente: $error")
             }
-
-        }
-    }*/
+    }
 }
