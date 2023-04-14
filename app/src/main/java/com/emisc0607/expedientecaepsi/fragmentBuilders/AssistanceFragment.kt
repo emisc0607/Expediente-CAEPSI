@@ -7,12 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import com.emisc0607.expedientecaepsi.MainActivity
 import com.emisc0607.expedientecaepsi.R
 import com.emisc0607.expedientecaepsi.databinding.FragmentAssistanceBinding
 import com.emisc0607.expedientecaepsi.entities.Expediente
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
@@ -34,25 +34,6 @@ class AssistanceFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mActivity = activity as? MainActivity
-        mStorageReference = FirebaseStorage.getInstance().reference
-        mDatabaseReference = FirebaseDatabase.getInstance().reference.child(pathExpedientes)
-        binding.rgAssistance.setOnCheckedChangeListener { _, checkedId ->
-            val key = mDatabaseReference.push().key!!
-            if (checkedId == R.id.rbYes) {
-                /*saveData(
-                    key,
-                    binding.tieName.text.toString(),
-                    binding.tieAge.text.toString(),
-                    binding.tieKey.text.toString()
-                )*/
-            }
-        }
-    }
-
-    private fun saveData(key: String, name: String, age: String, curp: String) {
-        val file = Expediente(id = key, name = name, age = age)
-        mDatabaseReference.child(key).setValue(file)
-
     }
 
     override fun onDestroy() {
@@ -68,5 +49,14 @@ class AssistanceFragment : Fragment() {
     private fun hideKeyboard() {
         val imm = mActivity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+    }
+
+    fun updateArguments(expediente: Expediente) {
+        binding.tieName.setText(expediente.name)
+        binding.tieKey.setText(expediente.id)
+        if (binding.tieKey.text != null && binding.tieKey.text!!.isNotEmpty()) {
+            val databaseReference = FirebaseDatabase.getInstance().reference
+
+        }
     }
 }

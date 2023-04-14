@@ -25,6 +25,18 @@
                 android:layout_gravity="center"
                 android:padding="@dimen/common_padding_min"
                 android:text="@string/str_ficha_id" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/str_clave_de_ingreso">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:id="@+id/tieKey"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapCharacters" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -34,6 +46,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
+                    android:id="@+id/tieName"
                     android:layout_height="wrap_content"
                     android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>

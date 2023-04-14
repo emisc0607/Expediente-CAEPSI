@@ -1,6 +1,5 @@
 package com.emisc0607.expedientecaepsi
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +7,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -17,21 +15,15 @@ import com.emisc0607.expedientecaepsi.databinding.ActivityMainBinding
 import com.emisc0607.expedientecaepsi.entities.Expediente
 import com.emisc0607.expedientecaepsi.entities.ExpedienteAdapter
 import com.emisc0607.expedientecaepsi.entities.MainAux
+import com.emisc0607.expedientecaepsi.entities.MyFragmentListener
 import com.emisc0607.expedientecaepsi.fragmentBuilders.*
-import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import java.util.*
+import java.nio.BufferUnderflowException
 
-class MainActivity : AppCompatActivity(), MainAux {
+class MainActivity : AppCompatActivity(), MainAux, MyFragmentListener {
     private lateinit var binding: ActivityMainBinding
-
-    private lateinit var mAuthListener: FirebaseAuth.AuthStateListener
-    private var mFirebaseAuth: FirebaseAuth? = null
-
-    private val rcCode = 21
-
     //    Fragments
     private lateinit var mActiveFragment: Fragment
     private lateinit var mFragmentManager: FragmentManager
@@ -47,6 +39,8 @@ class MainActivity : AppCompatActivity(), MainAux {
     private val treatmentFragment = TreatmentFragment()
     private val evolutionFragment = EvolutionFragment()
     private val interventionFragment = InterventionFragment()
+
+    //RecyclerView
     private lateinit var mAdapter: ExpedienteAdapter
     private var mutableDbList: MutableList<Expediente> = mutableListOf()
     private lateinit var databaseReference: DatabaseReference
@@ -56,62 +50,16 @@ class MainActivity : AppCompatActivity(), MainAux {
         binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setupAuth()
         launchFragment()
         databaseReference = FirebaseDatabase.getInstance().getReference("expedientes")
         initRecyclerView()
-        fetchExpedientes()
+        fetchFiles()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.option_menu, menu)
         return true
-    }
-
-    private fun setupAuth() {
-        mFirebaseAuth = FirebaseAuth.getInstance()
-        mAuthListener = FirebaseAuth.AuthStateListener {
-            val user = it.currentUser
-            if (user == null) {
-                startActivityForResult(
-                    AuthUI
-                        .getInstance()
-                        .createSignInIntentBuilder()
-                        .setIsSmartLockEnabled(false)
-                        .setAvailableProviders(
-                            listOf(
-                                AuthUI.IdpConfig.EmailBuilder().build(),
-                                AuthUI.IdpConfig.GoogleBuilder().build()
-                            )
-                        )
-                        .build(), rcCode
-                )
-            }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mFirebaseAuth?.addAuthStateListener { mAuthListener }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mFirebaseAuth?.removeAuthStateListener { mAuthListener }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == rcCode) {
-            if (resultCode == RESULT_OK) {
-                Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show()
-            } else {
-                if (IdpResponse.fromResultIntent(data) == null) {
-                    finish()
-                }
-            }
-        }
     }
 
     private fun initRecyclerView() {
@@ -143,11 +91,19 @@ class MainActivity : AppCompatActivity(), MainAux {
 
     private fun onItemSelected(expediente: Expediente) {
         Toast.makeText(this, expediente.name, Toast.LENGTH_SHORT).show()
-        val fragment = AssistanceFragment()
-        fragment.arguments = Bundle().apply {
+        assistanceFragment.updateArguments(expediente)
+        idFileFragment.updateArguments(expediente)
+        historyFragment.updateArguments(expediente)
+        launchAssistanceFragment()
 
-        }
+    }
 
+    private fun launchAssistanceFragment() {
+        binding.tvMain.text = getString(R.string.str_asistencia)
+        hideFab()
+        mFragmentManager.beginTransaction().hide(mActiveFragment).show(assistanceFragment)
+            .commit()
+        mActiveFragment = assistanceFragment
     }
 
     private fun onDeletedItem(position: Int) {
@@ -167,7 +123,7 @@ class MainActivity : AppCompatActivity(), MainAux {
             }
     }
 
-    private fun fetchExpedientes() {
+    private fun fetchFiles() {
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 mutableDbList.clear()
@@ -359,5 +315,9 @@ class MainActivity : AppCompatActivity(), MainAux {
             binding.fab.hide()
             binding.recyclerView.visibility = View.GONE
         }
+    }
+
+    override fun onMyFragmentArgumentsReceived(arg1: Expediente) {
+        assistanceFragment.updateArguments(arg1)
     }
 }

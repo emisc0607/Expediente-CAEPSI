@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.emisc0607.expedientecaepsi.databinding.FragmentIdFileBinding
+import com.emisc0607.expedientecaepsi.entities.Expediente
 
 class IdFileFragment : Fragment() {
     private lateinit var binding: FragmentIdFileBinding
@@ -17,4 +18,8 @@ class IdFileFragment : Fragment() {
         return binding.root
     }
 
+    fun updateArguments(expediente: Expediente) {
+        binding.tieName.setText(expediente.name)
+        binding.tieKey.setText(expediente.id)
+    }
 }
