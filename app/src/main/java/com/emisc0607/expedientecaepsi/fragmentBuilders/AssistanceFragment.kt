@@ -10,14 +10,12 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.emisc0607.expedientecaepsi.MainActivity
-import com.emisc0607.expedientecaepsi.R
 import com.emisc0607.expedientecaepsi.databinding.FragmentAssistanceBinding
 import com.emisc0607.expedientecaepsi.entities.Expediente
 import com.emisc0607.expedientecaepsi.entities.SpecificFile
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.util.Calendar
 
 class AssistanceFragment : Fragment() {
 
@@ -58,7 +56,7 @@ class AssistanceFragment : Fragment() {
         binding.tieKey.setText(expediente.id)
         val ref = expediente.id
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("$pathExpedientes/$ref")
-        Log.e("mDatabaseReference", "$mDatabaseReference")
+        val path = "$pathExpedientes/$ref"
         mDatabaseReference.addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 val file = snapshot.getValue(SpecificFile::class.java)
@@ -66,12 +64,26 @@ class AssistanceFragment : Fragment() {
                     binding.tieName.setText(it.name)
                     binding.tieAge.setText(it.age)
                     binding.tieCurp.setText(it.imgUrl)
+                    binding.tieSex.setText(it.assistance.size.toString())
                 }
+                updateAssistance(path)
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(requireContext(), "Error al leer DB", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+    private fun updateAssistance(path: String) {
+        val calendar = Calendar.getInstance()
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH)
+        val year = calendar.get(Calendar.YEAR)
+        val date = "D${day}M${month}A${year}"
+        val databaseReference = FirebaseDatabase.getInstance()
+        binding.bAssistance.setOnClickListener {
+            databaseReference.getReference(path).child("assistance").child(date).setValue(true)
+        }
+
     }
 }

@@ -97,6 +97,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/tieSex"
                     android:inputType="textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -151,36 +152,14 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <com.google.android.material.textview.MaterialTextView
-            style="@style/TextAppearance.MaterialComponents.Body1"
+        <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/bAssistance"
+            app:icon="@drawable/ic_location"
             android:layout_height="wrap_content"
-            android:padding="@dimen/common_padding_min"
             android:text="@string/str_attending" />
 
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/rgAssistance"
-            android:padding="@dimen/common_padding_min">
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:layout_width="0dp"
-                android:id="@+id/rbYes"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@drawable/ic_location"
-                android:text="@string/str_yes" />
-
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:layout_width="0dp"
-                android:id="@+id/rbNo"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@drawable/ic_wrong_location"
-                android:text="@string/str_no" />
-        </RadioGroup>
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"

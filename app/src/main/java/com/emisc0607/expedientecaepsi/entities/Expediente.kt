@@ -6,7 +6,5 @@ import com.google.firebase.database.IgnoreExtraProperties
 data class Expediente(
     var id: String = "",
     var name: String = "",
-    var age: String = "",
-    var imgUrl: String = "",
-    var assistance: Map<String, Int> = mutableMapOf()
+    var imgUrl: String = ""
 )

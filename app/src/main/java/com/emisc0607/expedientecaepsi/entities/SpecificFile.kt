@@ -8,5 +8,5 @@ data class SpecificFile(
     var name: String = "",
     var age: String = "",
     var imgUrl: String = "",
-    var assistance: Map<String, Int> = mutableMapOf()
+    var assistance: Map<String, Boolean> = mutableMapOf()
 )
