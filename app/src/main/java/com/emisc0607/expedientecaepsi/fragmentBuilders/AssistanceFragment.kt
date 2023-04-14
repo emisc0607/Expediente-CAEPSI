@@ -2,6 +2,7 @@ package com.emisc0607.expedientecaepsi.fragmentBuilders
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,9 @@ import com.emisc0607.expedientecaepsi.MainActivity
 import com.emisc0607.expedientecaepsi.R
 import com.emisc0607.expedientecaepsi.databinding.FragmentAssistanceBinding
 import com.emisc0607.expedientecaepsi.entities.Expediente
+import com.emisc0607.expedientecaepsi.entities.SpecificFile
 import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
@@ -52,11 +55,23 @@ class AssistanceFragment : Fragment() {
     }
 
     fun updateArguments(expediente: Expediente) {
-        binding.tieName.setText(expediente.name)
         binding.tieKey.setText(expediente.id)
-        if (binding.tieKey.text != null && binding.tieKey.text!!.isNotEmpty()) {
-            val databaseReference = FirebaseDatabase.getInstance().reference
+        val ref = expediente.id
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference("$pathExpedientes/$ref")
+        Log.e("mDatabaseReference", "$mDatabaseReference")
+        mDatabaseReference.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val file = snapshot.getValue(SpecificFile::class.java)
+                file?.let {
+                    binding.tieName.setText(it.name)
+                    binding.tieAge.setText(it.age)
+                    binding.tieCurp.setText(it.imgUrl)
+                }
+            }
 
-        }
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), "Error al leer DB", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

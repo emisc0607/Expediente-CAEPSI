@@ -1,6 +1,5 @@
 package com.emisc0607.expedientecaepsi
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -15,14 +14,11 @@ import com.emisc0607.expedientecaepsi.databinding.ActivityMainBinding
 import com.emisc0607.expedientecaepsi.entities.Expediente
 import com.emisc0607.expedientecaepsi.entities.ExpedienteAdapter
 import com.emisc0607.expedientecaepsi.entities.MainAux
-import com.emisc0607.expedientecaepsi.entities.MyFragmentListener
+import com.emisc0607.expedientecaepsi.entities.FragmentListener
 import com.emisc0607.expedientecaepsi.fragmentBuilders.*
-import com.firebase.ui.auth.IdpResponse
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import java.nio.BufferUnderflowException
 
-class MainActivity : AppCompatActivity(), MainAux, MyFragmentListener {
+class MainActivity : AppCompatActivity(), MainAux, FragmentListener {
     private lateinit var binding: ActivityMainBinding
     //    Fragments
     private lateinit var mActiveFragment: Fragment

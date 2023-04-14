@@ -1,5 +1,5 @@
 package com.emisc0607.expedientecaepsi.entities
 
-interface MyFragmentListener {
+interface FragmentListener {
     fun onMyFragmentArgumentsReceived(arg1: Expediente)
 }
